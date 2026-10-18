@@ -1,0 +1,106 @@
+/* MIST 3.3 / Borderless quick-access lenses.
+   Soft shadow + local Fresnel reflection, without an artificial perimeter stroke. */
+.shortcuts{
+  gap:clamp(11px,1.4vw,18px);
+  margin-top:24px;
+}
+.shortcut{width:53px;gap:8px}
+.shortcut-link{gap:8px}
+.shortcut-round{
+  width:44px;height:44px;
+  border:0!important;
+  border-radius:15px!important;
+  background:
+    radial-gradient(circle at 26% 15%,rgba(250,255,250,.11),transparent 54%),
+    linear-gradient(140deg,rgba(230,249,241,.12),rgba(17,34,36,.15) 63%,rgba(6,17,19,.24))!important;
+  box-shadow:
+    0 10px 24px rgba(1,8,9,.22),
+    0 2px 6px rgba(0,0,0,.14),
+    inset 0 1px 0 rgba(255,255,255,.16),
+    inset 0 -1px 0 rgba(255,255,255,.025)!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  color:rgba(246,249,239,.93);
+  font:600 13px/1 'Inter',system-ui,sans-serif;
+  letter-spacing:-.035em;
+  transform:translateY(0) scale(1);
+  transition:transform .27s cubic-bezier(.2,.75,.2,1),box-shadow .25s ease,background .25s ease!important;
+}
+/* A small directional light that belongs to the face, not to the outline. */
+.shortcut-round::before{
+  inset:0!important;z-index:1;opacity:.54;
+  border-radius:inherit;
+  background:
+    radial-gradient(45px 32px at var(--pointer-x) var(--pointer-y),rgba(255,255,255,.18),transparent 84%),
+    linear-gradient(157deg,rgba(255,255,255,.085),transparent 29%,transparent 73%,rgba(255,255,255,.018))!important;
+  transition:opacity .2s ease;
+}
+.shortcut-round::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:1;border-radius:inherit;
+  background:radial-gradient(ellipse 16px 7px at 27% 6%,rgba(255,255,255,.12),transparent 100%);
+  opacity:.54;
+}
+.shortcut-round .optical-icon-label{
+  position:relative;z-index:2;letter-spacing:-.04em;
+  color:rgba(248,251,245,.94);
+  text-shadow:0 1px 6px rgba(0,0,0,.43);
+}
+.shortcut-name{font-size:10px;color:rgba(236,240,231,.73);transition:color .25s ease}
+.shortcut:hover .shortcut-round,
+.shortcut-link:hover .shortcut-round,
+.shortcut-link:focus-visible .shortcut-round,
+.shortcut-add:hover .shortcut-round{
+  transform:translateY(-4px) scale(1.045)!important;
+  border:0!important;
+  box-shadow:
+    0 17px 29px rgba(0,0,0,.25),
+    0 3px 8px rgba(1,8,9,.16),
+    inset 0 1px 0 rgba(255,255,255,.24)!important;
+}
+.shortcut:hover .shortcut-round::before,.shortcut.optical-pointed .shortcut-round::before{opacity:.92}
+.shortcut:hover .shortcut-name,.shortcut-link:focus-visible .shortcut-name{color:rgba(255,255,250,.96)}
+/* Keep keyboard focus apparent without putting a permanent stroke on the glass. */
+.shortcut-link:focus-visible{outline:none}
+.shortcut-link:focus-visible .shortcut-round,
+.shortcut-add:focus-visible .shortcut-round{outline:2px solid rgba(231,245,233,.81);outline-offset:4px}
+.shortcut-add .shortcut-round{
+  border:0!important;
+  font:300 24px/1 system-ui,sans-serif;
+  color:rgba(232,244,233,.73);
+  background:linear-gradient(145deg,rgba(224,245,235,.055),rgba(15,28,29,.14))!important;
+  box-shadow:0 8px 19px rgba(1,8,9,.13),inset 0 1px rgba(255,255,255,.09)!important;
+}
+.shortcut-add:hover .shortcut-round{color:white}
+.shortcut-edit{
+  border:0!important;
+  background:rgba(18,37,38,.87);
+  box-shadow:0 5px 13px rgba(0,0,0,.2);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+}
+body.glass-off .shortcut-round,body.optics-fallback .shortcut-round{
+  border:0!important;
+  background:linear-gradient(140deg,rgba(42,59,57,.78),rgba(15,29,30,.76))!important;
+  box-shadow:0 10px 24px rgba(0,0,0,.2),inset 0 1px 0 rgba(255,255,255,.10)!important;
+}
+@media(max-width:620px){
+  .shortcuts{gap:9px;margin-top:20px}
+  .shortcut{width:46px}
+  .shortcut-round{width:39px;height:39px;border-radius:13px!important}
+  .shortcut-name{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.shortcut-round,.shortcut-name{transition:none!important}}
+/* Hover-only management affordance: a readable ellipsis, not a dark blob. */
+.shortcut-edit{
+  top:-5px;right:-5px;
+  width:18px;height:18px;
+  padding:0;
+  display:grid;place-items:center;
+  color:rgba(245,250,243,.93)!important;
+  font:500 15px/1 system-ui,sans-serif;
+  background:rgba(25,43,42,.85)!important;
+  border:0!important;
+  box-shadow:0 3px 10px rgba(0,0,0,.21),inset 0 1px rgba(255,255,255,.13);
+  opacity:0;
+}
+.shortcut:hover .shortcut-edit,.shortcut:focus-within .shortcut-edit{opacity:1}
+.shortcut-edit:hover{background:rgba(43,63,59,.96)!important}
+.shortcut-edit:focus-visible{opacity:1;outline:2px solid rgba(240,249,240,.81);outline-offset:2px}

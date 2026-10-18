@@ -1,0 +1,50 @@
+/* MIST 3.5.1: prevent Chromium compositing overload on motion enable.
+   Former rule animated each independently filtered wallpaper clone INSIDE EVERY
+   optical lens (search, icons, cards), causing many full-viewport surfaces to
+   animate at once. Only one photographic group is animated now. */
+.scene-motion-world{
+  position:absolute;
+  inset:0;
+  pointer-events:none;
+  transform-origin:center center;
+}
+/* Preserve the original fixed viewport appearance while moving a single group. */
+.scene-motion-world > .scene-layer{
+  position:absolute;
+  inset:-2.5%;
+}
+/* Disable both legacy animations, including the clones nested in each lens. */
+body.motion-on .scene-layer,
+body.motion-on .optical-clean,
+body.motion-on .optical-grain{
+  animation:none !important;
+  animation-delay:0s !important;
+}
+body.motion-on .scene-motion-world{
+  animation:mist-breathe-safe 58s ease-in-out infinite alternate;
+  will-change:transform;
+}
+@keyframes mist-breathe-safe {
+  0% { transform:translate3d(-.14%,-.08%,0) scale(1.012); }
+  100% { transform:translate3d(.14%,.08%,0) scale(1.026); }
+}
+/* With the wallpaper moving, lens replicas would drift out of alignment.
+   Use lightweight native backdrop glass instead, with NO duplicate animated
+   wallpaper layers. Text and controls remain ordinary DOM, never filtered. */
+body.motion-on .glass-optic {display:none!important}
+body.motion-on .search{
+  backdrop-filter:blur(9px) saturate(112%)!important;
+  -webkit-backdrop-filter:blur(9px) saturate(112%)!important;
+}
+body.motion-on .shortcut-round{
+  backdrop-filter:blur(6px) saturate(108%)!important;
+  -webkit-backdrop-filter:blur(6px) saturate(108%)!important;
+}
+body.motion-on .favorite-card:not(.favorite-add){
+  backdrop-filter:blur(8px) saturate(108%)!important;
+  -webkit-backdrop-filter:blur(8px) saturate(108%)!important;
+}
+/* Respect OS preferences even when previously saved state requests motion. */
+@media (prefers-reduced-motion:reduce){
+  body.motion-on .scene-motion-world {animation:none!important;will-change:auto}
+}

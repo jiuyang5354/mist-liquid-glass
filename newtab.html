@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <title>MIST · New Tab</title>
+  <link rel="icon" href="assets/icons/icon-32.png" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="glass.css" />
+  <link rel="stylesheet" href="optics-v3.css" />
+  <link rel="stylesheet" href="optics-v3.1.css" />
+  <link rel="stylesheet" href="optics-v3.2.css" />
+  <link rel="stylesheet" href="optics-v3.3.css" />
+  <link rel="stylesheet" href="optics-v3.3.1.css" />
+  <link rel="stylesheet" href="atelier-v3.5.css" />
+  <link rel="stylesheet" href="motion-fix-v3.5.1.css" />
+  <link rel="stylesheet" href="liquid-glass-v3.6.1.css?v=3.6.4" />
+  <script type="module" src="app.js?v=3.6.5"></script>
+</head>
+<body>
+  <div class="scene" aria-hidden="true">
+    <!-- The photographic layers share one motion transform with the GPU optics. -->
+    <div class="scene-motion-world" aria-hidden="true">
+      <div id="sceneClean" class="scene-layer scene-clean"></div>
+      <div id="sceneGrain" class="scene-layer scene-grain"></div>
+    </div>
+    <div class="scene-dotprint"></div>
+    <div class="scene-noise"></div>
+    <div class="scene-tone"></div>
+    <div class="scene-haze"></div>
+    <div class="scene-paper"></div>
+    <div class="scene-scan"></div>
+    <div class="scene-leak"></div>
+    <div class="scene-dimmer"></div>
+    <div class="scene-vignette"></div>
+  </div>
+
+  <div class="page">
+    <header class="topbar">
+      <div class="brand-corner" aria-label="MIST 新标签页">
+        <span class="brand-symbol" aria-hidden="true">✳</span>
+        <span>MIST <i>/</i> NEW TAB</span><span class="brand-precision">ATELIER / V3.6.5</span>
+      </div>
+      <div class="top-actions">
+        <div class="clock-box" aria-label="当前时间">
+          <span id="clockTime" class="clock-time">--:--</span>
+          <span id="clockDate" class="clock-date"></span>
+        </div>
+        <span class="top-divider" aria-hidden="true"></span>
+        <button class="icon-button settings-trigger" id="openSettings" type="button" aria-label="打开设置" title="设置">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.4v2.1M12 18.5v2.1M4.53 4.53l1.49 1.49m11.96 11.96 1.49 1.49M3.4 12h2.1m13 0h2.1M4.53 19.47l1.49-1.49M17.98 6.02l1.49-1.49"/><circle cx="12" cy="12" r="4.2"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <main class="hero" id="hero">
+      <p class="hero-caption"><span class="caption-line"></span> A LITTLE SPACE TO BREATHE <span class="caption-line"></span></p>
+      <h1>Mist<span class="hero-period">.</span></h1>
+      <p class="hero-subtitle">世界很吵，这里安静一点。</p>
+      <div class="glass-edition-label"><span class="glass-edition-dot"></span> LIQUID GLASS <span class="glass-edition-separator">/</span> SNELL OPTICS</div>
+
+      <form class="search" id="searchForm" role="search" autocomplete="off">
+        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" aria-hidden="true"><circle cx="10.75" cy="10.75" r="6.7"/><path d="m16.1 16.1 4.15 4.15"/></svg>
+        <input id="searchInput" type="search" placeholder="搜索，或输入网址..." aria-label="搜索或输入网址" enterkeyhint="go" spellcheck="false" autofocus />
+        <kbd class="search-hint" id="searchHint">/</kbd>
+        <button type="submit" class="search-submit" aria-label="开始搜索" title="搜索">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12h16m-6-6 6 6-6 6"/></svg>
+        </button>
+      </form>
+      <nav class="shortcuts" aria-label="快捷网站" id="shortcuts"></nav>
+    </main>
+
+    <section class="favorites" aria-labelledby="favoritesTitle">
+      <div class="favorites-header">
+        <div class="favorites-title-block">
+          <span class="eyebrow">YOUR CURATED CORNER</span>
+          <h2 id="favoritesTitle">常用站点 <span class="section-count" id="favoritesCount">00</span></h2>
+        </div>
+        <button class="text-button" type="button" id="addFavorite">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+          添加站点
+        </button>
+      </div>
+      <div class="favorite-grid" id="favoritesGrid"></div>
+      <div class="page-foot">
+        <span>ATMOSPHERE, NOT DISTRACTION.</span>
+        <div class="foot-right">
+          <span>VOL. 01&nbsp; / &nbsp;FOREST</span>
+          <span class="foot-separator">•</span>
+          <button type="button" id="wallpaperControl" class="foot-link">壁纸设置 ↗</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="panel-overlay" id="settingsOverlay" hidden></div>
+  <aside class="settings-panel" id="settingsPanel" aria-labelledby="settingsTitle" aria-hidden="true" inert>
+    <div class="panel-head">
+      <div>
+        <p class="eyebrow">MAKE IT YOURS</p>
+        <h2 id="settingsTitle">空间设置<span>.</span></h2>
+      </div>
+      <button type="button" class="icon-button panel-close" id="closeSettings" aria-label="关闭设置">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M5 5l14 14M19 5 5 19"/></svg>
+      </button>
+    </div>
+    <div class="panel-scroll">
+      <div class="settings-section">
+        <p class="settings-label">01 / WALLPAPER</p>
+        <div class="wallpaper-mini" id="wallpaperMini"></div>
+        <p class="settings-help">当前壁纸：<span id="wallpaperName">Misty Forest / 01</span></p>
+        <div class="button-row">
+          <button type="button" class="panel-button primary" id="uploadWallpaper">更换壁纸</button>
+          <button type="button" class="panel-button" id="restoreWallpaper">恢复原图</button>
+        </div>
+        <input type="file" id="wallpaperFile" accept="image/png,image/jpeg,image/webp,image/avif" hidden />
+        <button type="button" class="underlined-button" id="downloadWallpaper">保存当前壁纸 ↓</button>
+      </div>
+      <div class="settings-section atelier-presets-section">
+        <div class="atelier-section-heading"><p class="settings-label">02 / IMAGE LOOKS</p><span class="atelier-eyebrow">ONE-CLICK GRADE</span></div>
+        <p class="atelier-section-note">保留自然影像的细节，只改变它的情绪。</p>
+        <div id="presetGrid" class="preset-grid" role="group" aria-label="壁纸风格预设">
+          <button type="button" class="preset-tile preset-original" data-preset="original"><span class="preset-art"></span><span class="preset-name">原片</span></button>
+          <button type="button" class="preset-tile preset-cinema" data-preset="cinema"><span class="preset-art"></span><span class="preset-name">电影</span></button>
+          <button type="button" class="preset-tile preset-noir" data-preset="noir"><span class="preset-art"></span><span class="preset-name">黑白</span></button>
+          <button type="button" class="preset-tile preset-cyan" data-preset="cyan"><span class="preset-art"></span><span class="preset-name">冷雾</span></button>
+          <button type="button" class="preset-tile preset-vintage" data-preset="vintage"><span class="preset-art"></span><span class="preset-name">旧胶片</span></button>
+          <button type="button" class="preset-tile preset-night" data-preset="night"><span class="preset-art"></span><span class="preset-name">午夜</span></button>
+          <button type="button" class="preset-tile preset-archive" data-preset="archive"><span class="preset-art"></span><span class="preset-name">纸本档案</span></button>
+          <button type="button" class="preset-tile preset-dream" data-preset="dream"><span class="preset-art"></span><span class="preset-name">柔光</span></button>
+        </div>
+        <p id="presetDescription" class="preset-description" aria-live="polite">原始雾林色调，保留自然层次。</p>
+      </div>
+      <div class="settings-section">
+        <p class="settings-label">03 / ATMOSPHERE</p>
+        <div class="range-line"><label for="grainRange">网点 / 颗粒强度</label><output for="grainRange" id="grainOutput">65%</output></div>
+        <input type="range" id="grainRange" min="0" max="100" step="1" value="65" />
+        <div class="range-labels"><span>干净</span><span>复古颗粒</span></div>
+        <div class="range-line"><label for="brightnessRange">画面亮度</label><output for="brightnessRange" id="brightnessOutput">45%</output></div>
+        <input type="range" id="brightnessRange" min="0" max="100" step="1" value="45" />
+        <div class="range-labels"><span>暗调</span><span>明亮</span></div>
+        <div class="range-line"><label for="blurRange">背景柔化</label><output for="blurRange" id="blurOutput">0px</output></div>
+        <input type="range" id="blurRange" min="0" max="10" step="1" value="0" />
+        <div class="range-labels"><span>清晰</span><span>朦胧</span></div>
+        <label class="toggle-row"><span><strong>缓慢漂移</strong><small>给雾林一点轻微的呼吸感</small></span><input id="motionToggle" type="checkbox" /><span class="toggle-track" aria-hidden="true"></span></label>
+      </div>
+      <div class="settings-section atelier-grade-section">
+        <div class="atelier-section-heading"><p class="settings-label">04 / COLOR & TEXTURE</p><span class="atelier-eyebrow">FINE TUNE</span></div>
+        <div class="range-line"><label for="contrastRange">对比度</label><output for="contrastRange" id="contrastOutput">100%</output></div>
+        <input type="range" id="contrastRange" min="60" max="160" step="1" value="100" />
+        <div class="range-line"><label for="saturationRange">饱和度</label><output for="saturationRange" id="saturationOutput">100%</output></div>
+        <input type="range" id="saturationRange" min="0" max="170" step="1" value="100" />
+        <div class="range-line"><label for="warmthRange">色温</label><output for="warmthRange" id="warmthOutput">0</output></div>
+        <input type="range" id="warmthRange" min="-60" max="60" step="1" value="0" />
+        <div class="range-labels"><span>冷青</span><span>暖金</span></div>
+        <div class="range-line"><label for="hazeRange">雾感</label><output for="hazeRange" id="hazeOutput">0%</output></div>
+        <input type="range" id="hazeRange" min="0" max="100" step="1" value="0" />
+        <div class="range-line"><label for="vignetteRange">暗角</label><output for="vignetteRange" id="vignetteOutput">48%</output></div>
+        <input type="range" id="vignetteRange" min="0" max="100" step="1" value="48" />
+        <div class="texture-heading"><span>叠加材质</span><span class="atelier-eyebrow">OVERLAY</span></div>
+        <div id="texturePicker" class="texture-picker" role="group" aria-label="叠加材质">
+          <button type="button" data-texture="none">无</button>
+          <button type="button" data-texture="film">胶片</button>
+          <button type="button" data-texture="paper">纸张</button>
+          <button type="button" data-texture="scan">扫描线</button>
+          <button type="button" data-texture="leak">漏光</button>
+        </div>
+        <div class="range-line"><label for="textureRange">叠加强度</label><output for="textureRange" id="textureOutput">35%</output></div>
+        <input type="range" id="textureRange" min="0" max="100" step="1" value="35" />
+        <button id="resetGrade" type="button" class="atelier-reset">仅恢复影像参数 ↺</button>
+      </div>
+      <div class="settings-section">
+        <p class="settings-label">05 / LIQUID GLASS</p>
+        <div class="glass-material-preview"><span class="material-orb" aria-hidden="true"></span><span>OPTICAL GLASS <small>LIVE / REFRACTION</small></span></div>
+        <label class="toggle-row glass-toggle-row"><span><strong>启用液态玻璃</strong><small>曲面折射 · 透镜放大 · 实时背景采样</small></span><input id="glassToggle" type="checkbox" checked /><span class="toggle-track" aria-hidden="true"></span></label>
+        <div class="range-line"><label for="glassRange">折射强度</label><output for="glassRange" id="glassOutput">46%</output></div>
+        <input type="range" id="glassRange" min="0" max="100" step="1" value="46" />
+        <div class="range-labels"><span>柔和</span><span>晶莹</span></div>
+        <div class="range-line"><label for="highlightRange">边缘镜面高光</label><output for="highlightRange" id="highlightOutput">38%</output></div>
+        <input type="range" id="highlightRange" min="0" max="100" step="1" value="38" />
+        <div class="range-labels"><span>克制</span><span>通透高光</span></div>
+        <div class="range-line"><label for="dispersionRange">微弱色散</label><output for="dispersionRange" id="dispersionOutput">0%</output></div>
+        <input type="range" id="dispersionRange" min="0" max="100" step="1" value="0" />
+        <div class="range-labels"><span>无彩边</span><span>彩虹折射</span></div>
+        <p class="settings-help">搜索框与按钮使用清晰中心、弯曲边缘；收藏卡片带透镜放大与柔化。文字保持清晰，上方圆片实时显示当前玻璃。</p>
+      </div>
+      <div class="settings-section">
+        <p class="settings-label">06 / SEARCH</p>
+        <label for="engineSelect" class="select-label">默认搜索引擎</label>
+        <select id="engineSelect">
+          <option value="google">Google</option>
+          <option value="bing">Bing</option>
+          <option value="baidu">百度</option>
+          <option value="duckduckgo">DuckDuckGo</option>
+        </select>
+        <p class="settings-help">快捷键：<kbd>/</kbd> 聚焦搜索　<kbd>Esc</kbd> 退出</p>
+      </div>
+      <div class="settings-section settings-reset">
+        <button class="underlined-button" type="button" id="resetAll">恢复全部默认设置</button>
+        <p class="settings-help">设置保存在你的浏览器本地，不需要账号。</p>
+      </div>
+    </div>
+    <div class="panel-bottom">MIST / A PERSONAL NEW TAB</div>
+  </aside>
+
+  <dialog class="edit-dialog" id="editDialog" aria-labelledby="dialogTitle">
+    <form method="dialog" id="editForm" class="edit-form">
+      <div class="dialog-header"><div><p class="eyebrow">EDIT YOUR SPACE</p><h2 id="dialogTitle">添加快捷方式<span>.</span></h2></div><button type="button" class="icon-button panel-close" id="closeEditor" aria-label="关闭"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 5l14 14M19 5 5 19"/></svg></button></div>
+      <label for="editTitle">站点名称</label>
+      <input id="editTitle" type="text" name="title" placeholder="例如 Figma" maxlength="40" required />
+      <label for="editUrl">网址</label>
+      <input id="editUrl" type="text" name="url" placeholder="https://example.com" maxlength="500" required spellcheck="false" />
+      <div id="descriptionWrap"><label for="editDescription">简短备注 <span>（可选）</span></label><input id="editDescription" type="text" name="description" placeholder="让你记住它的用途" maxlength="64" /></div>
+      <p class="edit-error" id="editError" role="alert" aria-live="polite"></p>
+      <div class="edit-actions"><button type="button" class="danger-button" id="deleteEntry">删除</button><button type="submit" class="save-button" id="saveEntry">保存站点 →</button></div>
+    </form>
+  </dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

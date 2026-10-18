@@ -1,0 +1,9 @@
+/* MIST 3.3.1 / wide-screen and browser zoom centering fix.
+ * 3.3 constrained .page to 1600px without auto margins.
+ * This caused the app to stick to the left at wide desktop sizes or low zoom.
+ */
+.page {
+  margin-inline: auto;
+}
+/* Keep column alignment stable and centered in the max-width page container. */
+.topbar,.hero,.favorites { min-width: 0; }

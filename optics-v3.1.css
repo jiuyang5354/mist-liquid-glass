@@ -1,0 +1,41 @@
+/* MIST 3.1: refined thin-rim liquid glass. Intentional: no visible green extrusion. */
+:root{--liquid-alpha:.76;--mist-rim:rgba(239,250,243,.23)}
+.glass-optic{background:transparent!important;overflow:hidden!important;opacity:var(--liquid-alpha)}
+.glass-optic-filter{inset:-16px!important;overflow:visible!important;border-radius:0!important;will-change:auto}
+.glass-world.optical-world{background:#151b18}
+.search{
+  background:linear-gradient(125deg,rgba(241,246,240,.065),rgba(8,17,20,.14) 70%)!important;
+  border:1px solid rgba(240,249,244,.31)!important;
+  box-shadow:0 15px 36px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.17)!important;
+}
+.search::after{background:radial-gradient(150px 85px at var(--pointer-x) var(--pointer-y),rgba(255,255,255,.16),transparent 86%),linear-gradient(180deg,rgba(255,255,255,.05),transparent 20%)!important;opacity:.28}
+.search.optical-pointed::after{opacity:.62}
+.search:focus-within{border-color:rgba(244,253,247,.65)!important;box-shadow:0 0 0 3px rgba(226,247,232,.06),0 20px 45px rgba(0,0,0,.26),inset 0 1px rgba(255,255,255,.21)!important}
+.favorite-card{
+  background:linear-gradient(145deg,rgba(239,245,239,.045),rgba(10,17,20,.15) 75%)!important;
+  border:1px solid var(--mist-rim)!important;
+  box-shadow:0 11px 27px rgba(0,0,0,.19),inset 0 1px rgba(255,255,255,.12)!important;
+  backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+.favorite-card::before{background:radial-gradient(135px 78px at var(--pointer-x) var(--pointer-y),rgba(246,250,247,.095),transparent 83%),linear-gradient(180deg,rgba(255,255,255,.045),transparent 25%)!important;opacity:.43}
+.favorite-card.optical-pointed::before{opacity:.72}
+.favorite-card:hover{border-color:rgba(248,253,247,.40)!important;box-shadow:0 16px 33px rgba(0,0,0,.24),inset 0 1px rgba(255,255,255,.18)!important}
+.favorite-card::after{display:none!important}
+.favorite-card.favorite-add{border-style:dashed!important;background:linear-gradient(145deg,rgba(255,255,255,.025),rgba(0,0,0,.11))!important}
+.shortcut-round{
+  background:linear-gradient(140deg,rgba(242,248,243,.09),rgba(8,19,22,.13))!important;
+  border:1px solid rgba(245,251,245,.27)!important;
+  box-shadow:0 8px 17px rgba(0,0,0,.18),inset 0 1px rgba(255,255,255,.17)!important;
+}
+.shortcut-round::before{background:radial-gradient(44px 28px at var(--pointer-x) var(--pointer-y),rgba(255,255,255,.11),transparent 90%)!important}
+.shortcut:hover .shortcut-round{box-shadow:0 12px 23px rgba(0,0,0,.22),inset 0 1px rgba(255,255,255,.18)!important}
+.settings-panel{
+  background:linear-gradient(130deg,rgba(85,103,100,.15),rgba(10,19,23,.76) 50%,rgba(8,15,19,.87))!important;
+  border:1px solid rgba(246,253,246,.27)!important;
+  box-shadow:0 25px 78px rgba(0,0,0,.34),inset 0 1px rgba(255,255,255,.2)!important;
+}
+.settings-panel .glass-optic{opacity:.30}
+.glass-material-preview{border:1px solid rgba(245,251,247,.28)!important}
+body.glass-off .favorite-card,body.optics-fallback .favorite-card{background:rgba(16,27,29,.7)!important;backdrop-filter:blur(15px)!important;-webkit-backdrop-filter:blur(15px)!important}
+body.glass-off .search,body.optics-fallback .search{background:rgba(19,29,31,.75)!important;backdrop-filter:blur(18px)!important;-webkit-backdrop-filter:blur(18px)!important}
+@media(prefers-reduced-transparency:reduce){.search,.favorite-card,.shortcut-round,.settings-panel{background:rgba(12,25,28,.96)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}

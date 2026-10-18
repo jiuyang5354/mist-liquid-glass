@@ -1,0 +1,69 @@
+/* MIST 3.5 / image atelier + restrained optical refinement */
+:root{
+ --image-contrast:1;--image-saturation:1;--image-gray:0%;--tone-color:transparent;
+ --vignette-alpha:.28;--haze-opacity:0;--paper-opacity:0;--scan-opacity:0;
+ --leak-opacity:0;--film-grain-boost:0;
+}
+.scene-tone,.scene-haze,.scene-paper,.scene-scan,.scene-leak{
+ position:fixed;inset:0;pointer-events:none;
+}
+.scene-layer,.optical-clean,.optical-grain{
+ filter:brightness(var(--brightness)) contrast(var(--image-contrast)) saturate(var(--image-saturation)) grayscale(var(--image-gray)) blur(var(--blur))!important;
+}
+.scene-tone,.optical-tone{background:var(--tone-color);mix-blend-mode:soft-light}
+.scene-haze,.optical-haze{background:radial-gradient(ellipse at 53% 41%,rgba(253,239,213,.56),rgba(214,235,223,.22) 43%,transparent 78%);mix-blend-mode:screen;opacity:var(--haze-opacity)}
+.scene-paper,.optical-paper{background-image:repeating-linear-gradient(12deg,rgba(225,208,166,.095) 0px,rgba(225,208,166,.095) 1px,transparent 1px,transparent 6px),url('assets/noise.png');background-size:4px 6px,420px 420px;opacity:var(--paper-opacity);mix-blend-mode:soft-light}
+.scene-scan,.optical-scan{background:repeating-linear-gradient(0deg,rgba(0,0,0,.36) 0,rgba(0,0,0,.36) 1px,transparent 1px,transparent 5px);opacity:var(--scan-opacity);mix-blend-mode:multiply}
+.scene-leak,.optical-leak{background:radial-gradient(ellipse at 96% 20%,rgba(255,147,84,.64),rgba(221,96,66,.16) 31%,transparent 59%),radial-gradient(ellipse at 2% 70%,rgba(247,212,139,.24),transparent 46%);opacity:var(--leak-opacity);mix-blend-mode:screen}
+.scene-vignette,.optical-vignette{background:radial-gradient(ellipse at 50% 38%,transparent 9%,rgba(3,6,8,.065) 46%,rgba(3,6,8,var(--vignette-alpha)) 100%)!important}
+.optical-tone,.optical-haze,.optical-paper,.optical-scan,.optical-leak{inset:0}
+/* Do not re-create the opaque green extrusion. A fine, asymmetrical Fresnel sheen is enough. */
+.search{
+ border:none!important;border-radius:22px!important;
+ background:linear-gradient(125deg,rgba(246,252,248,.072),rgba(9,19,22,.135) 76%)!important;
+ box-shadow:0 18px 42px rgba(0,0,0,.24),inset 0 1px 0 rgba(255,255,255,.13)!important;
+}
+.search::before{content:"";position:absolute;z-index:1;pointer-events:none;inset:0;border-radius:inherit;
+ background:linear-gradient(180deg,rgba(250,255,249,.14),transparent 22%),radial-gradient(160px 60px at 26% 5%,rgba(255,255,255,.09),transparent 85%);opacity:.7}
+.search:focus-within{border:none!important;box-shadow:0 22px 48px rgba(0,0,0,.25),0 0 0 6px rgba(229,245,235,.045),inset 0 1px 0 rgba(255,255,255,.19)!important}
+.search.optical-pointed::after{opacity:.45!important}
+.search-submit{border:none!important;box-shadow:inset 0 1px 0 rgba(255,255,255,.16),0 4px 12px rgba(0,0,0,.1)!important}
+.shortcut-round{border:none!important;box-shadow:0 8px 19px rgba(0,0,0,.19),inset 0 1px 0 rgba(255,255,255,.16)!important}
+.favorite-card:not(.favorite-add){border:1px solid rgba(239,246,240,.15)!important;background:linear-gradient(145deg,rgba(249,252,248,.058),rgba(11,19,22,.14) 75%)!important;box-shadow:0 11px 25px rgba(0,0,0,.17),inset 0 1px rgba(255,255,255,.10)!important}
+.favorite-card:not(.favorite-add):hover{border-color:rgba(245,252,246,.31)!important;box-shadow:0 16px 32px rgba(0,0,0,.23),inset 0 1px rgba(255,255,255,.17)!important}
+.favorite-card:not(.favorite-add)::before{opacity:.33!important}
+/* Frost instead of multi-megapixel optical displacement for text-heavy drawer. */
+.settings-panel{background:linear-gradient(130deg,rgba(61,78,74,.90),rgba(12,24,27,.94) 34%,rgba(6,16,20,.97))!important;
+ backdrop-filter:blur(16px) saturate(108%)!important;-webkit-backdrop-filter:blur(16px) saturate(108%)!important;
+ border:1px solid rgba(250,255,250,.13)!important;box-shadow:-20px 12px 80px rgba(0,0,0,.4),inset 0 1px rgba(255,255,255,.08)!important}
+.settings-panel::before{opacity:.22}
+.atelier-section-heading{display:flex;align-items:baseline;justify-content:space-between;gap:9px}
+.atelier-section-heading .settings-label{margin-bottom:10px}
+.atelier-eyebrow{font-size:8px;letter-spacing:.15em;color:rgba(231,238,226,.38);white-space:nowrap}
+.atelier-section-note{margin:0 0 18px;font-size:11px;line-height:1.65;color:rgba(230,240,231,.59)}
+.preset-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.preset-tile{display:flex;flex-direction:column;align-items:stretch;text-align:left;gap:6px;padding:4px;border-radius:10px;border:1px solid transparent;color:rgba(239,247,239,.7);background:transparent;min-width:0;transition:background .2s ease,border-color .2s ease,transform .2s ease}
+.preset-tile:hover{background:rgba(255,255,255,.055);transform:translateY(-2px)}
+.preset-tile.is-active{background:rgba(226,242,229,.08);border-color:rgba(240,251,240,.33);color:#f7faf4}
+.preset-art{display:block;height:55px;border-radius:7px;background-image:url('assets/wallpapers/forest-grain.webp');background-position:center;background-size:cover;box-shadow:inset 0 0 0 1px rgba(255,255,255,.10)}
+.preset-name{font-size:10px;white-space:nowrap;text-align:center;padding:1px 0 2px}
+.preset-original .preset-art{filter:brightness(.98)}
+.preset-cinema .preset-art{filter:contrast(1.28) saturate(.65) brightness(.8)}
+.preset-noir .preset-art{filter:grayscale(1) contrast(1.4)}
+.preset-cyan .preset-art{filter:hue-rotate(38deg) saturate(.75) contrast(1.14)}
+.preset-vintage .preset-art{filter:sepia(.46) saturate(.85) contrast(.96)}
+.preset-night .preset-art{filter:hue-rotate(32deg) saturate(.55) brightness(.52) contrast(1.35)}
+.preset-archive .preset-art{filter:sepia(.74) saturate(.7) brightness(1.05)}
+.preset-dream .preset-art{filter:brightness(1.25) saturate(.75) contrast(.77)}
+.preset-description{font-size:10px;line-height:1.6;color:rgba(236,246,235,.57);margin:12px 0 0;min-height:16px}
+.atelier-grade-section .range-line{margin-top:17px}
+.texture-heading{display:flex;align-items:center;justify-content:space-between;margin:24px 0 11px;font-size:12px}
+.texture-picker{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:5px}
+.texture-picker button{padding:10px 0;border-radius:8px;border:1px solid rgba(247,253,247,.105);background:rgba(245,255,248,.04);color:rgba(239,249,240,.7);font-size:10px;transition:background .2s,border-color .2s}
+.texture-picker button:hover{background:rgba(255,255,255,.085)}
+.texture-picker button.is-active{background:rgba(212,233,217,.16);border-color:rgba(243,250,240,.38);color:white}
+.atelier-reset{border:none;border-bottom:1px solid rgba(225,243,232,.35);padding:0 0 3px;color:rgba(241,249,240,.67);background:none;font-size:11px;margin-top:20px}
+.atelier-reset:hover{color:white}
+@media(max-width:620px){.search{border-radius:18px!important}.preset-art{height:50px}.preset-grid{gap:6px}}
+@media(prefers-reduced-transparency:reduce){.search,.favorite-card,.shortcut-round,.settings-panel{background:rgba(14,27,29,.94)!important}}
+@media(prefers-reduced-motion:reduce){.preset-tile{transition:none!important}}

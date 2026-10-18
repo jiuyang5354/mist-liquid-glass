@@ -1,0 +1,56 @@
+/* MIST 3.0 - physical light bending over a faithful, counter-positioned scene. */
+:root{--liquid-alpha:.94;--optical-highlight:.74;--pointer-x:50%;--pointer-y:50%}
+.glass-filter-bank{position:absolute;width:0;height:0;overflow:hidden;pointer-events:none;left:-99999px;top:0}
+.liquid-surface{position:relative;isolation:isolate}
+.glass-optic{position:absolute;inset:0;display:block;overflow:hidden;border-radius:inherit;pointer-events:none;z-index:0;opacity:var(--liquid-alpha);transition:opacity .22s ease;background:#1e2d2b}
+.glass-optic-filter{position:absolute;display:block;inset:0;overflow:hidden;will-change:filter;border-radius:inherit}
+.glass-world.optical-world{position:absolute;display:block;left:0;top:0;overflow:hidden;pointer-events:none;will-change:transform;background:#151b18}
+.optical-scene-layer{position:absolute;pointer-events:none}
+.optical-clean,.optical-grain{inset:-2.5%;background-position:center;background-size:cover;background-repeat:no-repeat;filter:brightness(var(--brightness)) blur(var(--blur));transform:scale(1.03)}
+.optical-clean{background-image:var(--custom-wallpaper)}
+.optical-grain{background-image:url('assets/wallpapers/forest-grain.webp');opacity:var(--grain-blend)}
+.optical-dots,.optical-noise,.optical-dimmer,.optical-vignette{inset:0}
+.optical-dots{background-image:radial-gradient(circle at center,rgba(12,17,15,.78) 0 .64px,transparent .9px);background-size:4px 4px;mix-blend-mode:multiply;opacity:var(--dot-opacity)}
+.optical-noise{background:url('assets/noise.png') repeat;background-size:230px 230px;opacity:var(--noise-opacity);mix-blend-mode:soft-light}
+.optical-dimmer{background:linear-gradient(180deg,rgba(5,13,14,.06),rgba(5,12,12,.05) 52%,rgba(1,5,6,.38))}
+.optical-vignette{background:radial-gradient(ellipse at 50% 38%,transparent 12%,rgba(3,6,8,.1) 41%,rgba(3,6,8,.52) 98%)}
+/* Optical light sheen is faint when idle and grows near the cursor. */
+.search,.favorite-card,.shortcut-round,.settings-panel{--pointer-x:50%;--pointer-y:50%}
+.search{border-radius:24px!important;background:linear-gradient(115deg,rgba(246,255,250,.055),rgba(10,30,31,.045) 55%,rgba(8,19,22,.27))!important;border:1px solid rgba(244,255,248,.42)!important;box-shadow:0 24px 65px rgba(0,0,0,.25),inset 0 1.3px 0 rgba(255,255,255,.43),inset 0 -1px 0 rgba(233,255,249,.15),0 0 0 .6px rgba(255,255,255,.08)!important}
+.search::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;border-radius:inherit;background:radial-gradient(190px 95px at var(--pointer-x) var(--pointer-y),rgba(239,255,248,.21),transparent 80%),linear-gradient(176deg,rgba(245,255,250,.18),transparent 12%,transparent 79%,rgba(3,15,18,.14));opacity:.53;transition:opacity .32s ease}
+.search.optical-pointed::after{opacity:.94}
+.search:focus-within{border-color:rgba(242,255,251,.87)!important;box-shadow:0 0 0 4px rgba(218,249,236,.07),0 30px 74px rgba(0,0,0,.24),inset 0 1.4px rgba(255,255,255,.57)!important}
+.search > :not(.glass-optic){z-index:2;position:relative}
+.search-icon,.search input,.search-submit{filter:drop-shadow(0 1px 4px rgba(1,7,7,.33))}
+.shortcut-round{isolation:isolate;overflow:hidden;border-radius:16px!important;background:linear-gradient(140deg,rgba(249,255,246,.10),rgba(11,25,29,.17))!important;border:1px solid rgba(242,255,247,.37)!important;box-shadow:inset 0 1px 1px rgba(255,255,255,.54),inset 0 -1px rgba(236,255,252,.12),0 12px 22px rgba(0,0,0,.18)!important;backdrop-filter:none!important}
+.shortcut-round::before{z-index:1;inset:0;background:radial-gradient(45px 35px at var(--pointer-x) var(--pointer-y),rgba(255,255,255,.26),transparent),linear-gradient(180deg,rgba(255,255,255,.16),transparent 45%)}
+.optical-icon-label{z-index:2;position:relative;display:grid;place-items:center;width:100%;height:100%;text-shadow:0 1px 8px rgba(0,0,0,.45);pointer-events:none}
+.favorite-card{isolation:isolate;border-radius:22px!important;background:linear-gradient(145deg,rgba(253,255,253,.075),rgba(7,24,28,.31))!important;border:1px solid rgba(245,255,247,.29)!important;box-shadow:0 20px 40px rgba(0,0,0,.21),inset 0 1px rgba(255,255,255,.35),inset 0 -1px rgba(241,255,247,.07)!important;backdrop-filter:none!important;transition:transform .3s cubic-bezier(.22,.8,.25,1),border-color .2s,box-shadow .22s}
+.favorite-card::before{background:radial-gradient(170px 110px at var(--pointer-x) var(--pointer-y),rgba(245,255,252,.2),transparent 75%),linear-gradient(180deg,rgba(250,255,249,.11),transparent 32%);opacity:.65;transition:opacity .3s}
+.favorite-card.optical-pointed::before{opacity:1}
+.favorite-card:hover{transform:translateY(-5px)!important;border-color:rgba(253,255,252,.65)!important;box-shadow:0 27px 58px rgba(0,0,0,.27),inset 0 1px rgba(255,255,255,.47)!important}
+.favorite-card > :not(.glass-optic){z-index:2;position:relative}
+.favorite-card.favorite-add{background:linear-gradient(145deg,rgba(237,255,250,.045),rgba(10,30,33,.24))!important;border-style:dashed!important}
+/* Drawer: same physical lens, but with higher ink density for text-heavy settings. */
+.settings-panel{background:linear-gradient(135deg,rgba(117,149,140,.14),rgba(13,34,34,.34) 28%,rgba(6,19,22,.78))!important;border:1px solid rgba(251,255,251,.37)!important;box-shadow:inset 0 1px rgba(255,255,255,.43),-22px 10px 90px rgba(0,0,0,.46)!important;backdrop-filter:blur(9px) saturate(112%)!important;-webkit-backdrop-filter:blur(9px) saturate(112%)!important}
+.settings-panel .glass-optic{opacity:.48}
+.settings-panel > :not(.glass-optic){position:relative;z-index:2}
+.settings-panel .panel-scroll{background:linear-gradient(180deg,rgba(5,20,21,.27),rgba(3,15,17,.47));min-height:0}
+.settings-panel .glass-optic-filter{border-radius:inherit}
+.settings-panel .glass-optic{border-radius:inherit}
+.glass-material-preview{position:relative;isolation:isolate;background:linear-gradient(120deg,rgba(234,255,247,.13),rgba(12,48,46,.28))!important;border:1px solid rgba(241,255,249,.43)!important}
+.material-orb{background:radial-gradient(circle at 29% 23%,rgba(255,255,255,.8),transparent 13%),radial-gradient(circle at 79% 75%,rgba(173,218,212,.32),transparent 33%),linear-gradient(125deg,rgba(237,254,249,.27),rgba(11,56,61,.17) 41%,rgba(12,32,33,.52))}
+body.glass-off .glass-optic,body.optics-fallback .glass-optic{display:none!important}
+body.glass-off .search,body.optics-fallback .search{background:rgba(21,37,38,.65)!important;backdrop-filter:blur(24px)!important}
+body.glass-off .favorite-card,body.optics-fallback .favorite-card{background:rgba(19,39,39,.72)!important;backdrop-filter:blur(20px)!important}
+body.motion-on .optical-clean,body.motion-on .optical-grain{animation:mist-drift 55s ease-in-out infinite alternate}
+body.motion-on .optical-grain{animation-delay:-12s}
+@media(prefers-reduced-motion:reduce){body.motion-on .optical-clean,body.motion-on .optical-grain{animation:none}.search::after,.favorite-card::before{transition:none}}
+@media(prefers-reduced-transparency:reduce){.glass-optic{display:none!important}.search,.favorite-card,.settings-panel,.shortcut-round{background:rgba(12,30,32,.96)!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important}}
+@media(max-width:620px){.search{border-radius:18px!important}.favorite-card{border-radius:16px!important}.settings-panel{border-radius:22px!important}}
+
+/* Fixed drawers must never enlarge the new-tab document's scrollable width. */
+html,body{max-width:100%;overflow-x:clip!important}
+@media(max-width:620px){.shortcuts{max-width:100%;justify-content:center;flex-wrap:wrap}}
+/* The settings drawer is a fixed lens, not an in-flow card. */
+.settings-panel.liquid-surface{position:fixed!important}

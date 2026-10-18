@@ -1,0 +1,20 @@
+{
+  "manifest_version": 3,
+  "name": "MIST · 雾林新标签页",
+  "short_name": "MIST Tab",
+  "version": "3.6.5",
+  "description": "曲面边缘折射、透镜放大与柔化玻璃；缓慢漂移时同步背景采样，保留 8 种影像预设与本地设置。",
+  "permissions": [
+    "storage"
+  ],
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  "minimum_chrome_version": "105"
+}

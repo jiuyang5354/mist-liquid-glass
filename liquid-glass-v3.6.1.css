@@ -1,0 +1,68 @@
+/* Reference optics replace the previous painted rim and pointer spotlight. */
+.glass-gpu{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0}
+.glass-gpu[hidden]{display:none}
+.glass-source-probe{position:fixed!important;left:0!important;top:0!important;visibility:hidden!important;transform:none!important;will-change:auto!important}
+.glass-source-probe .optical-photo{transform:none!important}
+.glass-source-probe .optical-scene-layer{transition:none!important;animation:none!important}
+.glass-preview{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* Card actions stay outside the content flow despite generic glass layering. */
+.favorite-card > .favorite-edit{
+  position:absolute;
+  top:12px;
+  right:12px;
+  width:28px;
+  height:28px;
+  padding:0;
+  border-radius:50%;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(245,250,247,.18);
+}
+.favorite-card > .favorite-edit svg{display:block;width:16px;height:16px;fill:currentColor;pointer-events:none}
+.favorite-card > .favorite-edit:hover{background:rgba(255,255,255,.13)}
+.favorite-card .favorite-head{padding-right:36px}
+.glass-optic{
+  border-radius:0!important;
+  opacity:var(--liquid-alpha);
+}
+.optical-photo{
+  position:absolute;
+  inset:0;
+}
+.liquid-rim,.liquid-tint{
+  position:absolute;
+  display:block;
+  inset:0;
+  pointer-events:none;
+}
+.liquid-rim{overflow:hidden;opacity:var(--liquid-rim-opacity,1)}
+.liquid-tint{background:#000;opacity:.1}
+.optic-icon .liquid-tint{opacity:.06}
+.material-orb.liquid-surface{background:transparent!important;box-shadow:none!important}
+.material-orb.liquid-surface::before,.material-orb.liquid-surface::after{content:none!important}
+
+body:not(.glass-off):not(.optics-fallback) .search,
+body:not(.glass-off):not(.optics-fallback) .shortcut-round,
+body:not(.glass-off):not(.optics-fallback) .favorite-card:not(.favorite-add){
+  background:transparent!important;
+  border:0!important;
+  overflow:visible;
+  box-shadow:0 1px 2px rgba(20,20,40,.1),0 2px 6px -1px rgba(20,20,40,.14)!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+}
+body:not(.glass-off):not(.optics-fallback) .favorite-card:not(.favorite-add){box-shadow:none!important}
+body:not(.glass-off):not(.optics-fallback) .search::before,
+body:not(.glass-off):not(.optics-fallback) .search::after,
+body:not(.glass-off):not(.optics-fallback) .shortcut-round::before,
+body:not(.glass-off):not(.optics-fallback) .shortcut-round::after,
+body:not(.glass-off):not(.optics-fallback) .favorite-card:not(.favorite-add)::before,
+body:not(.glass-off):not(.optics-fallback) .favorite-card:not(.favorite-add)::after{
+  content:none!important;
+}
+body:not(.glass-off):not(.optics-fallback) .search:focus-within{
+  box-shadow:0 0 0 3px rgba(240,249,246,.07),0 2px 6px -1px rgba(20,20,40,.14)!important;
+}
+body.motion-on:not(.glass-off):not(.optics-fallback) .glass-optic{display:block!important}
+@media(prefers-reduced-transparency:reduce){
+  body .glass-optic{display:none!important}
+}
