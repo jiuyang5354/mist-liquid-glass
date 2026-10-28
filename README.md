@@ -1,3 +1,5 @@
+**中文** | [English](README.en.md)
+
 # MIST 3.6.5 · 液态玻璃性能优化版
 
 Chrome / Edge Manifest V3 新标签页扩展。保留 MIST 3.3.1 的布局与玻璃风格。
